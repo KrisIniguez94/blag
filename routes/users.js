@@ -30,5 +30,13 @@ router.get('/:id', fucntion(req,res,next) {
   })
 })
 
+//Add a post
+router.post('/:id', function(req, res, next) {
+  const user_id = req.params.id;
+  knex('todos')
+  .insert({
+    
+  })
+})
 
 module.exports = router;
