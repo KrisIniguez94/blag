@@ -18,7 +18,7 @@ router.get("/", function(req, res, next) {
 
 //get a single user
 
-router.get('/:id', fucntion(req,res,next) {
+router.get('/:id', function(req,res,next) {
   knex('users')
   .where('id', req.params.id)
   .first()
@@ -33,10 +33,34 @@ router.get('/:id', fucntion(req,res,next) {
 //Add a post
 router.post('/:id', function(req, res, next) {
   const user_id = req.params.id;
-  knex('todos')
-  .insert({
-    
-  })
+  knex('posts')
+  .insert({post: req.body.post, user_id: user_id})
+  .then(function() {
+    res.redirect("/users/" + user_id);
+  });
 })
+
+// Add a user
+router.post('/', function (req, res, next) {
+  const {
+    username,
+    password
+  } = req.body;
+  bcrypt.hash(password, 12)
+    .then(function (hashed_password) {
+      return knex('users')
+        .insert({
+          username,
+          hashed_password
+        })
+    })
+    .then(function () {
+      res.redirect('/users')
+    })
+    .catch(function (err) {
+      next(err);
+    })
+})
+
 
 module.exports = router;
