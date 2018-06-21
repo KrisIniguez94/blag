@@ -5,7 +5,12 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Welcome to Kris and Wally's Blog!</h1>
+    <h1>Users</h1>
+    <ul>
+      <% users.map(user => { %>
+        <li><a href=/users/<%=user.id%>><%= user.username %></a></li>
+      <% }) %>
+    </ul>
     <h2>Sign In</h2>
     <form action="/sign_in" method="post">
       <input type="text" name="username" value="username">
